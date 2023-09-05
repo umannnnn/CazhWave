@@ -4,6 +4,7 @@ use App\Models\Category;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\CourseController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\DashboardController;
@@ -40,8 +41,8 @@ Route::get('/login', [LoginController::class, 'index'])->name('login')->middlewa
 Route::post('/login', [LoginController::class, 'store']);
 Route::post('/logout', [LoginController::class, 'logout']);
 
-Route::get('/register', [RegisterController::class, 'index'])->middleware('guest');
-Route::post('/register', [RegisterController::class, 'store']);
+// Route::get('/register', [RegisterController::class, 'index'])->middleware('guest');
+// Route::post('/register', [RegisterController::class, 'store']);
 
 // Route::get('/dashboard', function () {
 //     return view('dashboard.index', [
@@ -50,10 +51,11 @@ Route::post('/register', [RegisterController::class, 'store']);
 // })->middleware('auth');
 
 Route::get('/dashboard/courses/checkSlug', [DashboardController::class, 'checkSlug'])->middleware('auth');
-Route::resource('/dashboard/courses', DashboardController::class)->middleware('auth');
+Route::resource('/dashboard/courses', DashboardController::class)->middleware('auth')->middleware('isAdmin');
 
 Route::get('/dashboard/categories/checkSlug', [AdminCategoryController::class, 'checkSlug'])->middleware('auth');
 Route::resource('/dashboard/categories', AdminCategoryController::class)->except('show')->middleware('isAdmin');
 
 Route::resource('/dashboard/users', AdminUserController::class)->except('show')->middleware('isAdmin');
 
+Route::resource('/dashboard/profiles', ProfileController::class)->except('show')->middleware('auth');

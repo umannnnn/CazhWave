@@ -16,8 +16,8 @@ class DashboardController extends Controller
     public function index()
     {
         return view('dashboard.courses.index', [
-            'title' => 'My Courses',
-            'courses' => Course::where('user_id', auth()->user()->id)->get()
+            'title' => 'My Training',
+            'courses' => Course::all()
         ]);
     }
 
@@ -27,7 +27,7 @@ class DashboardController extends Controller
     public function create()
     {
         return view('dashboard.courses.create', [
-            'title' => 'Create New Course',
+            'title' => 'Create New Training',
             'categories' => Category::all()
         ]);
     }
@@ -50,7 +50,7 @@ class DashboardController extends Controller
     
         Course::create($validateData);
 
-        return redirect('/dashboard/courses')->with('success', 'New course has been created!');
+        return redirect('/dashboard/courses')->with('success', 'New training has been created!');
     }
 
     /**
@@ -59,7 +59,7 @@ class DashboardController extends Controller
     public function show(Course $course)
     {
         return view('dashboard.courses.show', [
-            'title' => 'Course Details',
+            'title' => 'Training Details',
             'course' => $course
         ]);
     }
@@ -70,7 +70,7 @@ class DashboardController extends Controller
     public function edit(Course $course)
     {
         return view('dashboard.courses.edit', [
-            'title' => 'Edit Course',
+            'title' => 'Edit Training',
             'course' => $course,
             'categories' => Category::all()
         ]);
@@ -100,7 +100,7 @@ class DashboardController extends Controller
         Course::where('id', $course->id)
             ->update($validatedData);
 
-        return redirect('/dashboard/courses')->with('success', 'Course has been updated!');
+        return redirect('/dashboard/courses')->with('success', 'Training has been updated!');
     }
 
     /**
@@ -109,7 +109,7 @@ class DashboardController extends Controller
     public function destroy(Course $course)
     {
         Course::destroy($course->id);
-        return redirect('/dashboard/courses')->with('success', 'Course has been deleted!');
+        return redirect('/dashboard/courses')->with('success', 'Training has been deleted!');
     }
 
     public function checkSlug(Request $request)

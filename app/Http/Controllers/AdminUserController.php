@@ -75,6 +75,7 @@ class AdminUserController extends Controller
             'name' => 'required|max:255',
             'username' => 'required|min:3|max:255|unique:users,username,' . $id,
             'email' => 'required|email:dns|unique:users,email,' . $id ,
+            // 'password' => 'nullable|min:5|max:255',
             'is_admin' => 'required|boolean'
         ]);
 

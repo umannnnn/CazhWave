@@ -64,7 +64,13 @@
                             <td class="px-4 py-3">{{ $user->name }}</td>
                             <td class="px-4 py-3">{{ $user->username }}</td>
                             <td class="px-4 py-3">{{ $user->email }}</td>
-                            <td class="px-4 py-3">{{ $user->is_admin }}</td>
+                            <td class="px-4 py-3">
+                                @if ($user->is_admin == 1)
+                                    Admin
+                                @else
+                                    User
+                                @endif
+                            </td>
                             <td class="px-4 py-3 flex items-center justify-end">
                                 <button id="user-{{ $user->id }}-dropdown-Leftbutton" data-dropdown-toggle="user-{{ $user->id }}-dropdownLeft" class="inline-flex items-center p-0.5 text-sm font-medium text-center text-gray-500 hover:text-gray-800 rounded-lg focus:outline-none dark:text-gray-400 dark:hover:text-gray-100" type="button">
                                     <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">

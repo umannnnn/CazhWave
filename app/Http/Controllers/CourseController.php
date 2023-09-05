@@ -26,7 +26,7 @@ class CourseController extends Controller
         }
 
         return view('courses', [
-            "title" => 'All Courses' . $title,
+            "title" => 'All Training' . $title,
             "courses" => Course::latest()->filter(request(['search', 'category', 'author']))->paginate(6)->withQueryString()
         ]);
     }
@@ -53,7 +53,7 @@ class CourseController extends Controller
     public function show(Course $course)
     {
         return view('course', [
-            "title" => "Single Course",
+            "title" => "Single Training",
             "course" => $course
         ]);
     }

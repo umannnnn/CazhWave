@@ -3,7 +3,7 @@
 @section('container')
 
     <div class="py-4 px-4 mx-auto">
-        <h2 class="mb-4 text-xl font-bold text-gray-900 dark:text-white">Add a new product</h2>
+        <h2 class="mb-4 text-xl font-bold text-gray-900 dark:text-white">Add a new user</h2>
         <form action="/dashboard/users" method="post">
             @csrf
             <div class="grid gap-4 sm:grid-cols-2 sm:gap-6">

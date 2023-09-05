@@ -8,7 +8,7 @@
             <header class="mb-4 lg:mb-6 not-format">
                 <address class="flex items-center mb-6 not-italic">
                     <div class="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white">
-                        <img class="mr-4 w-16 h-16 rounded-full" src="https://flowbite.com/docs/images/people/profile-picture-2.jpg" alt="Jese Leos">
+                        <img class="mr-4 w-16 h-16 rounded-full" src="https://flowbite.com/docs/images/people/profile-picture-1.jpg" alt="Jese Leos">
                         <div>
                             <p class="text-xl font-bold text-gray-900 dark:text-white">{{  $course->author->name }}</p>
                             <p class="text-base font-light text-gray-500 dark:text-gray-400">
@@ -25,9 +25,9 @@
             <p class="mb-5 text-justify">
                 {{ $course->excerpt }}
             </p>
-            <iframe width="auto" height="auto" src="https://www.youtube.com/embed/{{ $course->link }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-            <p class="mt-5 max-w-lg text-4xl font-semibold leading-normal text-gray-900 dark:text-white">Course Description</p>
-            <p class="mt-3 text-justify">
+            <iframe width="550px" height="300px" src="https://www.youtube.com/embed/{{ $course->link }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+            <p class="mt-5 max-w-lg text-2xl font-semibold leading-normal text-gray-900 dark:text-white">Training Description</p>
+            <p class="mt-2 text-justify">
                 {!! $course->description !!}
             </p>
         </article>

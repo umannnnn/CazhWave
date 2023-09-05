@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Cviebrock\EloquentSluggable\Services\SlugService;
 
 class AdminCategoryController extends Controller
@@ -36,8 +37,13 @@ class AdminCategoryController extends Controller
     {
         $validateData = $request->validate([
             'name' => 'required|max:255',
-            'slug' => 'required|unique:categories'
+            'slug' => 'required|unique:categories',
+            'image' => 'image|file|max:2048'
         ]);
+
+        if($request->file('image')){
+            $validateData['image'] = $request->file('image')->store('course-images');
+        }
 
         Category::create($validateData);
 
@@ -71,8 +77,17 @@ class AdminCategoryController extends Controller
     {
         $validateData = $request->validate([
             'name' => 'required|max:255',
-            'slug' => 'required|unique:categories,slug,' . $category->id
+            'slug' => 'required|unique:categories,slug,' . $category->id,
+            'image' => 'image|file|max:2048'
         ]);
+
+        if($request->file('image')){
+            if($request->oldImage){
+                Storage::delete($request->oldImage);
+            }
+
+            $validateData['image'] = $request->file('image')->store('course-images');
+        }
 
         $category->update($validateData);
 
@@ -84,6 +99,10 @@ class AdminCategoryController extends Controller
      */
     public function destroy(Category $category)
     {
+        if($category->image){
+            Storage::delete($category->image);
+        }
+
         $category->delete();
 
         return redirect('/dashboard/categories')->with('success', 'Category has been deleted!');

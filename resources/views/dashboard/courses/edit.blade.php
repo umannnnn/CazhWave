@@ -3,14 +3,14 @@
 @section('container')
 
     <div class="py-4 px-4 mx-auto">
-        <h2 class="mb-4 text-xl font-bold text-gray-900 dark:text-white">Add a new product</h2>
+        <h2 class="mb-4 text-xl font-bold text-gray-900 dark:text-white">Edit training</h2>
         <form action="/dashboard/courses/{{ $course->slug }}" method="post">
             @method('put')
             @csrf
             <div class="grid gap-4 sm:grid-cols-2 sm:gap-6">
                 <div class="w-full">
                     <label for="title" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Title</label>
-                    <input type="text" name="title" id="title" class="@error('title') border-red-500 @else border-gray-300 @enderror bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Type product name" value="{{ old('title', $course->title ) }}">
+                    <input type="text" name="title" id="title" class="@error('title') border-red-500 @else border-gray-300 @enderror bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Type training name" value="{{ old('title', $course->title ) }}">
                     @error('title')
                         <div class="mt-2 text-sm text-red-600 dark:text-red-500">
                             <span class="font-medium">Oops!</span> {{ $message }}
@@ -23,7 +23,7 @@
                 </div>
                 <div class="w-full">
                     <label for="link" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Link</label>
-                    <input type="text" name="link" id="link" class="@error('link') border-red-500 @else border-gray-300 @enderror bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Link youtube course" value="{{ old('link' , $course->link) }}">
+                    <input type="text" name="link" id="link" class="@error('link') border-red-500 @else border-gray-300 @enderror bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Link youtube training" value="{{ old('link' , $course->link) }}">
                     @error('link')
                         <div class="mt-2 text-sm text-red-600 dark:text-red-500">
                             <span class="font-medium">Oops!</span> {{ $message }}
@@ -50,7 +50,7 @@
                 </div>
             </div>
             <button type="submit" class="inline-flex items-center px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-center text-white bg-blue-700 rounded-lg focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-900 hover:bg-blue-800">
-                Update course
+                Update training
             </button>
         </form>
     </div>
