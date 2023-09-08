@@ -17,13 +17,8 @@
                     </button>
                     <!-- Dropdown menu -->
                     <div id="dropdownAction" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600">
-                        <ul class="py-1 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownActionButton">
-                            <li>
-                                <a href="/dashboard/courses/create" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Add new training</a>
-                            </li>
-                        </ul>
                         <div class="py-1">
-                            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Delete all training</a>
+                            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Delete all message</a>
                         </div>
                     </div>
                 </div>
@@ -34,7 +29,7 @@
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
                         </svg>
                     </div>
-                    <input type="text" id="table-search-users" class="block p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search for training">
+                    <input type="text" id="table-search-users" class="block p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search for message">
                 </div>
             </div>
 
@@ -59,35 +54,34 @@
                     <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                         <tr>
                             <th scope="col" class="px-4 py-3">ID</th>
-                            <th scope="col" class="px-4 py-3">Title</th>
-                            <th scope="col" class="px-4 py-3">Category</th>
-                            <th scope="col" class="px-4 py-3">Link</th>
+                            <th scope="col" class="px-4 py-3">Email</th>
+                            <th scope="col" class="px-4 py-3">Subject</th>
+                            <th scope="col" class="px-4 py-3">Phone Number</th>
+                            <th scope="col" class="px-4 py-3">Created At</th>
                             <th scope="col" class="px-4 py-3 text-end">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($courses as $course)
+                        @foreach ($mails as $mail)
                         <tr class="border-b dark:border-gray-700">
                             <th scope="row" class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ $loop->iteration }}</th>
-                            <td class="px-4 py-3">{{ $course->title }}</td>
-                            <td class="px-4 py-3">{{ $course->category->name }}</td>
-                            <td class="px-4 py-3">{{ $course->link }}</td>
+                            <td class="px-4 py-3">{{ $mail->email }}</td>
+                            <td class="px-4 py-3">{{ $mail->subject }}</td>
+                            <td class="px-4 py-3">{{ $mail->phone }}</td>
+                            <td class="px-4 py-3">{{ $mail->created_at }}</td>
                             <td class="px-4 py-3 flex items-center justify-end">
-                                <button id="course-{{ $course->slug }}-dropdown-Leftbutton" data-dropdown-toggle="course-{{ $course->slug }}-dropdownLeft" class="inline-flex items-center p-0.5 text-sm font-medium text-center text-gray-500 hover:text-gray-800 rounded-lg focus:outline-none dark:text-gray-400 dark:hover:text-gray-100" type="button">
+                                <button id="mail-{{ $mail->id }}-dropdown-Leftbutton" data-dropdown-toggle="mail-{{ $mail->id }}-dropdownLeft" class="inline-flex items-center p-0.5 text-sm font-medium text-center text-gray-500 hover:text-gray-800 rounded-lg focus:outline-none dark:text-gray-400 dark:hover:text-gray-100" type="button">
                                     <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z" />
                                     </svg>
                                 </button>
-                                <div id="course-{{ $course->slug }}-dropdownLeft" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
+                                <div id="mail-{{ $mail->id }}-dropdownLeft" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
                                     <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownLeftButton">
                                         <li>
-                                            <a href="/dashboard/courses/{{ $course->slug }}" class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Show</a>
+                                            <a href="#" id="mail-{{ $mail->id }}-modal" data-modal-toggle="mail-{{ $mail->id }}-modal" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">View</a>
                                         </li>
                                         <li>
-                                            <a href="/dashboard/courses/{{ $course->slug }}/edit" class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Edit</a>
-                                        </li>
-                                        <li>
-                                            <form action="/dashboard/courses/{{ $course->slug }}" method="post">
+                                            <form action="/dashboard/mails/{{ $mail->id }}" method="post">
                                                 @method('delete')
                                                 @csrf
                                                 <button type="submit" class="block w-full py-2 px-4 text-left text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white" onclick="return confirm('Are you sure?')">Delete</button>
@@ -97,10 +91,41 @@
                                 </div>                                
                             </td>
                         </tr>
+                        <div id="mail-{{ $mail->id }}-modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-modal md:h-full">
+                            <div class="relative p-4 w-full max-w-xl h-full md:h-auto">
+                                <!-- Modal content -->
+                                <div class="relative p-4 bg-white rounded-lg shadow dark:bg-gray-800 sm:p-5">
+                                    <!-- Modal header -->
+                                    <div class="flex justify-between mb-4 rounded-t sm:mb-5">
+                                        <div class="text-lg text-gray-900 md:text-xl dark:text-white">
+                                            <h3 class="font-semibold ">
+                                                Message from
+                                            </h3>
+                                            <p class="font-bold">
+                                                {{ $mail->email  }}
+                                            </p>
+                                        </div>
+                                        <div>
+                                            <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 inline-flex dark:hover:bg-gray-600 dark:hover:text-white" data-modal-toggle="mail-{{ $mail->id }}-modal">
+                                                <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                                                <span class="sr-only">Close modal</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <!-- Modal body -->
+                                    <div class="mb-6 text-gray-900 dark:text-gray-100">
+                                        <p class="mb-2">
+                                            {{ $mail->message }}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         @endforeach
                     </tbody>
                 </table>
             </div>
+            
             <nav class="flex flex-col md:flex-row justify-between items-start md:items-center space-y-3 md:space-y-0 p-4" aria-label="Table navigation">
                 <span class="text-sm font-normal text-gray-500 dark:text-gray-400">
                     Showing
@@ -112,6 +137,5 @@
         </div>
     </div>
 </section>
-
 
 @endsection

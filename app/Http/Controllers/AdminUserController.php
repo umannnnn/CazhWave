@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class AdminUserController extends Controller
 {
@@ -37,10 +39,15 @@ class AdminUserController extends Controller
             'name' => 'required|max:255',
             'username' => 'required|min:3|max:255|unique:users',
             'email' => 'required|email:dns|unique:users',
-            'password' => 'required|min:5|max:255'
+            'password' => 'required|min:5|max:255',
+            'image' => 'image|nullable|max:2048'
         ]);
-
+        
         $validateData['password'] = bcrypt($validateData['password']);
+        
+        if($request->file('image')){
+            $validateData['image'] = $request->file('image')->store('profile');
+        }
 
         User::create($validateData);
 
@@ -76,8 +83,23 @@ class AdminUserController extends Controller
             'username' => 'required|min:3|max:255|unique:users,username,' . $id,
             'email' => 'required|email:dns|unique:users,email,' . $id ,
             // 'password' => 'nullable|min:5|max:255',
-            'is_admin' => 'required|boolean'
+            'is_admin' => 'required|boolean',
+            'image' => 'image|file|max:2048'
         ]);
+
+        // if($validateData['password']){
+        //     $validateData['password'] = bcrypt($validateData['password']);
+        // }else{
+        //     unset($validateData['password']);
+        // }
+
+        if($request->file('image')){
+            if($request->oldImage){
+                Storage::delete($request->oldImage);
+            }
+
+            $validateData['image'] = $request->file('image')->store('profile');
+        }
 
         User::where('id', $id)->update($validateData);
 
@@ -89,6 +111,18 @@ class AdminUserController extends Controller
      */
     public function destroy(string $id)
     {
+        $hasCourses = User::find($id)->courses()->exists();
+
+        if($hasCourses){
+            return redirect('/dashboard/users')->with('error', 'User cannot be deleted because it has trainings!');
+        }
+
+        $user = User::findOrFail($id);
+
+        if($user->image){
+            Storage::delete($user->image);
+        }
+
         User::destroy($id);
         return redirect('/dashboard/users')->with('success', 'User has been deleted!');
     }

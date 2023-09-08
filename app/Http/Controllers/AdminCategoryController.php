@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Course;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -99,6 +100,15 @@ class AdminCategoryController extends Controller
      */
     public function destroy(Category $category)
     {
+
+        // Memeriksa apakah ada kursus terkait dengan kategori
+        $hasCourses = Course::where('category_id', $category->id)->exists();
+
+        // Jika ada kursus terkait, munculkan pesan dan arahkan kembali
+        if ($hasCourses) {
+            return redirect()->route('categories.index')->with('error', 'Kategori tidak dapat dihapus karena terdapat training yang terkait.');
+        }
+
         if($category->image){
             Storage::delete($category->image);
         }
